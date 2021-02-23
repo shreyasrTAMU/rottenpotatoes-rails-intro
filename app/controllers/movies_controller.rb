@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
 
   def index
     @sort = params[:sort] || session[:sort]
-    @all_ratings = Movie.all_ratings 
+    @all_ratings = Movie.get_ratings 
 
     @ratings = params[:ratings] || session[:ratings] || @all_ratings
   
@@ -55,5 +55,11 @@ class MoviesController < ApplicationController
   # This helps make clear which methods respond to requests, and which ones do not.
   def movie_params
     params.require(:movie).permit(:title, :rating, :description, :release_date)
+  end
+  
+  def get_ratings  
+    hm = {}
+    @all_ratings.each { |val| hm[val] = '1' }
+    hm
   end
 end
