@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
 
     @ratings_to_show = params[:ratings]  || session[:ratings] || get_ratings
   
-    @movies = Movie.where( { rating: @ratings.keys } )
+    @movies = Movie.where( { rating: @ratings_to_show.keys } )
     @movies = @movies.order(@sort)
     # session[:sort] = @sort
     # session[:ratings] = @ratings
