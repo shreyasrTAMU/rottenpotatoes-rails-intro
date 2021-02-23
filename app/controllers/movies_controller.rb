@@ -15,10 +15,10 @@ class MoviesController < ApplicationController
     @movies = Movie.where( { rating: @ratings_to_show.keys } )
     @movies = @movies.order(@sort)
     session[:sort] = @sort
-    session[:ratings_to_show] = @ratings_to_show
-    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings_to_show]
+    session[:ratings] = @ratings_to_show
+    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
       flash.keep
-      redirect_to movies_path sort: @sort, ratings_to_show: @ratings
+      redirect_to movies_path sort: @sort, ratings: @ratings_to_show
     end
   end
 
