@@ -10,14 +10,9 @@ class MoviesController < ApplicationController
     @sort = params[:sort] || session[:sort]
     @all_ratings = Movie.all_ratings 
 
-    
-    if !params[:ratings].nil?
-      @ratings_to_show = @all_ratings
-    end
-    
     @ratings_to_show = params[:ratings]  || session[:ratings] || get_ratings
-    
-    @movies = Movie.with_ratings(@ratings_to_show)
+  
+    @movies = Movie.where( { rating: @ratings_to_show.keys } )
     @movies = @movies.order(@sort)
     session[:sort] = @sort
     session[:ratings] = @ratings_to_show
@@ -27,9 +22,6 @@ class MoviesController < ApplicationController
     end
   end
 
-  def new
-    # default: render 'new' template
-  end
 
   def create
     @movie = Movie.create!(movie_params)
